@@ -99,12 +99,16 @@
             height: 42px;
             width: auto;
             mix-blend-mode: multiply; /* 라이트 모드에서 흰색 배경 제거 */
+            will-change: mix-blend-mode;
+            transform: translate3d(0, 0, 0); /* iOS 사파리 블렌딩 버그용 하드웨어 가속 강제 */
         }
 
         /* 다크 모드에서 로고 색상 반전 및 검은색 배경 제거 */
         body:not(.light-theme) .pulmuone-logo {
             filter: invert(1) hue-rotate(180deg) brightness(1.1);
             mix-blend-mode: screen;
+            will-change: filter, mix-blend-mode;
+            transform: translate3d(0, 0, 0);
         }
 
         .logo-text {
@@ -169,9 +173,9 @@
             margin-bottom: 8px;
         }
 
-        @media (min-width: 380px) {
+        @media (min-width: 480px) {
             .form-row-grid {
-                grid-template-columns: 1.2fr 1fr; /* 가로폭 확보 시에만 가로 배열 */
+                grid-template-columns: 1.2fr 1fr; /* 태블릿/PC 등 넓은 화면에서만 가로 배열 */
             }
         }
 
