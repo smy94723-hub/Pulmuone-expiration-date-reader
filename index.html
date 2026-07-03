@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>번들 제품 소비기한 판정기 | Pulmuone</title>
+    <!-- 스마트폰 바탕화면 바로가기 추가 시 앱 아이콘 지정 -->
+    <link rel="apple-touch-icon" href="pulmuone_logo.png">
+    <link rel="icon" type="image/png" href="pulmuone_logo.png">
     <!-- 구글 폰트 적용 (Outfit & Noto Sans KR) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -247,10 +250,10 @@
 
         .component-item {
             display: flex;
-            gap: 8px;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
             background: rgba(0, 0, 0, 0.15);
-            padding: 6px 8px;
+            padding: 8px;
             border-radius: 8px;
             border: 1px solid var(--border);
             animation: fadeIn 0.2s ease-out;
@@ -260,8 +263,22 @@
             background: rgba(0, 0, 0, 0.03);
         }
 
+        .component-row-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .component-row-bottom {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+
         .component-name {
-            flex: 1.2;
+            flex: 1;
             font-size: 0.8rem;
             font-weight: 700;
             border: none;
@@ -276,10 +293,17 @@
             border-bottom-color: var(--primary);
         }
 
-        .component-date {
-            flex: 2;
-            padding: 6px 8px !important;
-            font-size: 0.8rem !important;
+        .component-select {
+            flex: 1;
+            padding: 5px 6px !important;
+            font-size: 0.78rem !important;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background-color: transparent;
+            color: var(--text);
+            outline: none;
+            min-width: 0;
         }
 
         .delete-btn {
@@ -588,6 +612,117 @@
             font-size: 2rem;
         }
 
+        /* 커스텀 달력 모달 */
+        .calendar-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .calendar-modal-content {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 320px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .calendar-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .calendar-selects {
+            display: flex;
+            gap: 6px;
+        }
+
+        .calendar-selects select {
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: transparent;
+            color: var(--text);
+            outline: none;
+        }
+
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+        }
+
+        .calendar-grid-header {
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .calendar-day {
+            padding: 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .calendar-day.selected {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .calendar-day.empty {
+            cursor: default;
+        }
+
+        .calendar-day.sunday {
+            color: var(--danger);
+        }
+
+        .calendar-day.saturday {
+            color: #3b82f6;
+        }
+
+        /* 커스텀 달력 인풋 스타일 */
+        .custom-calendar-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 18px;
+            padding-right: 32px !important;
+        }
+
         footer {
             text-align: center;
             font-size: 0.65rem;
@@ -632,7 +767,7 @@
             <h2>📅 제조일 및 기준 설정</h2>
             <div class="form-group" style="margin-bottom: 12px;">
                 <label for="mfgDate">제조일자</label>
-                <input type="date" id="mfgDate" onchange="calculateResult()">
+                <input type="text" id="mfgDate" class="custom-calendar-input" readonly placeholder="날짜 선택" onclick="openCalendarPicker('mfgDate')" style="cursor: pointer;">
             </div>
             <div class="form-group" style="margin-bottom: 12px;">
                 <label>기준 소비기한</label>
@@ -645,10 +780,10 @@
                 </div>
             </div>
             <div class="period-presets">
-                <button class="preset-btn active" onclick="setPresetPeriod(9, 'months', this)">9개월</button>
-                <button class="preset-btn" onclick="setPresetPeriod(6, 'months', this)">6개월</button>
-                <button class="preset-btn" onclick="setPresetPeriod(12, 'months', this)">12개월</button>
                 <button class="preset-btn" onclick="setPresetPeriod(30, 'days', this)">30일</button>
+                <button class="preset-btn" onclick="setPresetPeriod(6, 'months', this)">6개월</button>
+                <button class="preset-btn active" onclick="setPresetPeriod(9, 'months', this)">9개월</button>
+                <button class="preset-btn" onclick="setPresetPeriod(12, 'months', this)">12개월</button>
             </div>
         </div>
 
@@ -710,12 +845,42 @@
         </div>
     </div>
 
+    <!-- 커스텀 오프라인 달력 모달 -->
+    <div id="calendarModal" class="calendar-modal" onclick="if(event.target === this) closeCalendarPicker()">
+        <div class="calendar-modal-content">
+            <div class="calendar-modal-header">
+                <button class="calendar-nav-btn" onclick="prevCalendarMonth()">◀</button>
+                <div class="calendar-selects">
+                    <select id="calYearSelect" onchange="renderCalendarGrid()"></select>
+                    <select id="calMonthSelect" onchange="renderCalendarGrid()"></select>
+                </div>
+                <button class="calendar-nav-btn" onclick="nextCalendarMonth()">▶</button>
+            </div>
+            <div class="calendar-grid calendar-grid-header">
+                <div class="sunday">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="saturday">토</div>
+            </div>
+            <div id="calendarDays" class="calendar-grid">
+                <!-- 날짜가 동적으로 들어감 -->
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                <button class="add-btn" style="flex: 1; background-color: var(--border); color: var(--text); border: none;" onclick="closeCalendarPicker()">취소</button>
+                <button class="add-btn" style="flex: 1; background-color: var(--primary); color: white; border: none;" onclick="confirmCalendarSelection()">확인</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         © 2026 Pulmuone Food Safety & Packaging.
     </footer>
 </div>
 
 <script>
+    // 커스텀 달력 상태 관리 변수
+    let activeInputId = null;
+    let calCurrentYear = new Date().getFullYear();
+    let calCurrentMonth = new Date().getMonth() + 1; // 1-12
+    let calSelectedDate = null; // Date 객체
+
     // 오늘 날짜로 제조일 초기값 설정
     window.addEventListener('DOMContentLoaded', () => {
         const today = new Date();
@@ -790,13 +955,28 @@
         row.className = 'component-item';
         row.id = `comp-row-${compCounter}`;
         
+        const currentId = compCounter;
+        
+        // 날짜 입력을 커스텀 달력 인풋으로 구성
         row.innerHTML = `
-            <input type="text" class="component-name" value="${name}" placeholder="구성품명" oninput="calculateResult()">
-            <input type="date" class="component-date" value="${savedDate}" onchange="calculateResult()">
-            <button class="delete-btn" onclick="removeComponentRow(${compCounter})">🗑️</button>
+            <div class="component-row-top">
+                <input type="text" class="component-name" value="${name}" placeholder="구성품명" oninput="calculateResult()">
+                <button class="delete-btn" onclick="removeComponentRow(${currentId})">🗑️</button>
+            </div>
+            <div class="component-row-bottom">
+                <input type="text" class="component-date custom-calendar-input" readonly id="comp-date-${currentId}" value="${savedDate}" placeholder="날짜 선택" onclick="openCalendarPicker('comp-date-${currentId}')" style="cursor: pointer; width: 100%;">
+            </div>
         `;
         
         listContainer.appendChild(row);
+        
+        // 만약 구성품 기본 날짜가 지정되지 않았다면 제조일자를 기준으로 맞춰둠
+        if (!savedDate) {
+            const mfgVal = document.getElementById('mfgDate').value;
+            if (mfgVal) {
+                document.getElementById(`comp-date-${currentId}`).value = mfgVal;
+            }
+        }
         
         setTimeout(() => {
             listContainer.scrollTop = listContainer.scrollHeight;
@@ -1107,6 +1287,177 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    // --- 커스텀 오프라인 달력 로직 ---
+    
+    // 연도 및 월 선택 셀렉트 목록 채우기
+    function initCalendarSelectors() {
+        const yearSel = document.getElementById("calYearSelect");
+        const monthSel = document.getElementById("calMonthSelect");
+        yearSel.innerHTML = "";
+        monthSel.innerHTML = "";
+        
+        const currentYear = new Date().getFullYear();
+        // 연도 범위 설정: 현재 기준 -5년부터 +5년까지
+        for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+            const opt = document.createElement("option");
+            opt.value = y;
+            opt.textContent = `${y}년`;
+            yearSel.appendChild(opt);
+        }
+        
+        for (let m = 1; m <= 12; m++) {
+            const opt = document.createElement("option");
+            opt.value = m;
+            opt.textContent = `${m}월`;
+            monthSel.appendChild(opt);
+        }
+    }
+
+    // 달력 열기
+    function openCalendarPicker(inputId) {
+        activeInputId = inputId;
+        const inputEl = document.getElementById(inputId);
+        let dateVal = inputEl.value;
+        
+        // 날짜 값이 없을 때 초기화 조건 처리
+        if (!dateVal) {
+            if (inputId !== 'mfgDate') {
+                dateVal = document.getElementById('mfgDate').value;
+            }
+            if (!dateVal) {
+                const today = new Date();
+                dateVal = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+            }
+        }
+        
+        const parts = dateVal.split("-");
+        if (parts.length === 3) {
+            calCurrentYear = parseInt(parts[0]);
+            calCurrentMonth = parseInt(parts[1]);
+            calSelectedDate = new Date(calCurrentYear, calCurrentMonth - 1, parseInt(parts[2]));
+        } else {
+            const today = new Date();
+            calCurrentYear = today.getFullYear();
+            calCurrentMonth = today.getMonth() + 1;
+            calSelectedDate = today;
+        }
+        
+        initCalendarSelectors();
+        
+        document.getElementById("calYearSelect").value = calCurrentYear;
+        document.getElementById("calMonthSelect").value = calCurrentMonth;
+        
+        renderCalendarGrid();
+        
+        document.getElementById("calendarModal").style.display = "flex";
+    }
+
+    // 달력 일자 렌더링
+    function renderCalendarGrid() {
+        const year = parseInt(document.getElementById("calYearSelect").value);
+        const month = parseInt(document.getElementById("calMonthSelect").value);
+        calCurrentYear = year;
+        calCurrentMonth = month;
+        
+        const firstDayIndex = new Date(year, month - 1, 1).getDay(); // 해당 월 1일의 요일 (0-6)
+        const lastDay = new Date(year, month, 0).getDate(); // 해당 월의 총 일수
+        
+        const daysContainer = document.getElementById("calendarDays");
+        daysContainer.innerHTML = "";
+        
+        // 1일 시작 전 공백 칸 채우기
+        for (let i = 0; i < firstDayIndex; i++) {
+            const cell = document.createElement("div");
+            cell.className = "calendar-day empty";
+            daysContainer.appendChild(cell);
+        }
+        
+        // 일자 채우기
+        for (let d = 1; d <= lastDay; d++) {
+            const cell = document.createElement("div");
+            cell.className = "calendar-day";
+            cell.textContent = d;
+            
+            const currentDayOfWeek = (firstDayIndex + d - 1) % 7;
+            if (currentDayOfWeek === 0) cell.classList.add("sunday");
+            if (currentDayOfWeek === 6) cell.classList.add("saturday");
+            
+            // 기존 선택된 날짜와 일치 시 활성화 스타일
+            if (calSelectedDate && 
+                calSelectedDate.getFullYear() === year && 
+                calSelectedDate.getMonth() === (month - 1) && 
+                calSelectedDate.getDate() === d) {
+                cell.classList.add("selected");
+            }
+            
+            cell.onclick = () => {
+                const selectedCells = daysContainer.querySelectorAll(".calendar-day.selected");
+                selectedCells.forEach(c => c.classList.remove("selected"));
+                cell.classList.add("selected");
+                
+                calSelectedDate = new Date(year, month - 1, d);
+            };
+            
+            daysContainer.appendChild(cell);
+        }
+    }
+
+    // 이전 달 이동
+    function prevCalendarMonth() {
+        const monthSel = document.getElementById("calMonthSelect");
+        const yearSel = document.getElementById("calYearSelect");
+        let m = parseInt(monthSel.value) - 1;
+        let y = parseInt(yearSel.value);
+        if (m < 1) {
+            m = 12;
+            y--;
+        }
+        const currentYear = new Date().getFullYear();
+        if (y >= currentYear - 5) {
+            yearSel.value = y;
+            monthSel.value = m;
+            renderCalendarGrid();
+        }
+    }
+
+    // 다음 달 이동
+    function nextCalendarMonth() {
+        const monthSel = document.getElementById("calMonthSelect");
+        const yearSel = document.getElementById("calYearSelect");
+        let m = parseInt(monthSel.value) + 1;
+        let y = parseInt(yearSel.value);
+        if (m > 12) {
+            m = 1;
+            y++;
+        }
+        const currentYear = new Date().getFullYear();
+        if (y <= currentYear + 5) {
+            yearSel.value = y;
+            monthSel.value = m;
+            renderCalendarGrid();
+        }
+    }
+
+    // 날짜 확정 및 닫기
+    function confirmCalendarSelection() {
+        if (activeInputId && calSelectedDate) {
+            const inputEl = document.getElementById(activeInputId);
+            const y = calSelectedDate.getFullYear();
+            const m = String(calSelectedDate.getMonth() + 1).padStart(2, '0');
+            const d = String(calSelectedDate.getDate()).padStart(2, '0');
+            inputEl.value = `${y}-${m}-${d}`;
+            
+            calculateResult();
+        }
+        closeCalendarPicker();
+    }
+
+    // 달력 닫기
+    function closeCalendarPicker() {
+        document.getElementById("calendarModal").style.display = "none";
+        activeInputId = null;
     }
 </script>
 </body>
