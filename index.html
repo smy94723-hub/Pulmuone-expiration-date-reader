@@ -650,7 +650,7 @@
         }
 
         .calendar-selects select {
-            padding: 4px 8px;
+            padding: 4px 22px 4px 8px; /* 오른쪽에 내장 화살표 공간 확보 */
             font-size: 0.85rem;
             font-weight: 700;
             border-radius: 8px;
@@ -658,6 +658,20 @@
             background-color: transparent;
             color: var(--text);
             outline: none;
+            -webkit-appearance: none; /* 기본 모바일 브라우저의 긴 화살표 스타일 초기화 */
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            background-size: 12px;
+        }
+
+        #calYearSelect {
+            min-width: 90px;
+        }
+
+        #calMonthSelect {
+            min-width: 65px;
         }
 
         .calendar-nav-btn {
